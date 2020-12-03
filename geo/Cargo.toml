@@ -38,6 +38,9 @@ criterion = { version = "0.3" }
 # As such it's kept unpublished. It's in a separate repo primarily because it's kind of large.
 jts-test-runner = { git = "https://github.com/georust/jts-test-runner", rev = "3294b9af1d3e64fcc9caf9646a93d0116f7d8321" }
 rand = "0.8.0"
+serde-xml-rs = "0.4.0"
+serde = { version = "1.0", features = ["derive"] }
+wkt = "0.8"
 
 [[bench]]
 name = "area"
