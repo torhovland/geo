@@ -119,9 +119,12 @@ impl TestRunner {
         let cases = self.parse_cases(filter)?;
         debug!("cases.len(): {}", cases.len());
         for case in cases {
-            use crate::algorithm::relate::relate_computer::RelateComputer;
+            use crate::relate::relate_computer::RelateComputer;
+            use crate::GeometryCow;
 
-            let mut relate_computer = RelateComputer::new(&case.geometry_a, &case.geometry_b);
+            let gca = &GeometryCow::from(&case.geometry_a);
+            let gcb = &GeometryCow::from(&case.geometry_b);
+            let mut relate_computer = RelateComputer::new(gca, gcb);
             let intersection_matrix = relate_computer.compute_intersection_matrix();
             if intersection_matrix == case.expected_result {
                 debug!("succeeded: {:?}", case);
@@ -177,23 +180,25 @@ impl TestRunner {
                 }
                 // re: `unwrap` see https://github.com/georust/wkt/issues/49
                 // we could map to our own error or something, but this is just test code anyway
-                let wkt_a = match wkt::Wkt::from_str(&case.a) {
+                let wkt_a: wkt::Wkt<f64> = match wkt::Wkt::from_str(&case.a) {
                     Ok(wkt) => wkt,
                     Err(e) => {
                         warn!("error: {:?}, skipping invalid WKT: {}", e, &case.a);
                         continue;
                     }
                 };
-                let geometry_a = Geometry::try_from(wkt_a).expect("conversion error");
+                // let geometry_a = Geometry::try_from(wkt_a).expect("conversion error");
+                let geometry_a: Geometry<f64> = todo!("broken during rebase, but this is all getting deleted");
 
-                let wkt_b = match wkt::Wkt::from_str(&case.b) {
+                let wkt_b: wkt::Wkt<f64> = match wkt::Wkt::from_str(&case.b) {
                     Ok(wkt) => wkt,
                     Err(e) => {
                         warn!("error: {:?}, skipping invalid WKT: {}", e, &case.b);
                         continue;
                     }
                 };
-                let geometry_b = Geometry::try_from(wkt_b).expect("conversion error");
+                // let geometry_b = Geometry::try_from(wkt_b).expect("conversion error");
+                let geometry_b: Geometry<f64> = todo!("broken during rebase, but this is all getting deleted");
 
                 for test in case.tests {
                     match test.op.name.as_str() {
