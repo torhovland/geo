@@ -20,13 +20,12 @@
 ///    (-) ━━━╋━━━━ (+)
 ///        SW ┃ SE
 ///          (-)
-// CLEANUP: can we remove explicit discriminant? It's used in
 #[derive(Debug, Clone, Copy)]
 pub enum Quadrant {
-    NE = 0,
-    NW = 1,
-    SW = 2,
-    SE = 3,
+    NE,
+    NW,
+    SW,
+    SE,
 }
 
 impl Quadrant {
