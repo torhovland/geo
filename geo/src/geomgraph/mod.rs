@@ -16,8 +16,6 @@ mod node_factory;
 mod node_map;
 mod planar_graph;
 mod quadrant;
-#[cfg(test)]
-mod test;
 mod topology_location;
 
 pub(crate) use edge::Edge;

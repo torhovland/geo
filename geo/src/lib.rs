@@ -184,8 +184,7 @@ mod geomgraph;
 mod traits;
 mod types;
 mod utils;
-// Maybe someday make this public and/or move to geo-types?
-pub(crate) use geometry_cow::GeometryCow;
+pub use geometry_cow::GeometryCow;
 
 #[cfg(test)]
 #[macro_use]

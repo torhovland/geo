@@ -69,7 +69,7 @@ use crate::geomgraph::Location;
 /// This implementation is heavily based on that from the [JTS project](https://github.com/locationtech/jts/blob/master/modules/core/src/main/java/org/locationtech/jts/geom/IntersectionMatrix.java).
 // JTS: public class IntersectionMatrix implements Cloneable {
 #[derive(PartialEq, Eq)]
-pub(crate) struct IntersectionMatrix([[Dimensions; 3]; 3]);
+pub struct IntersectionMatrix([[Dimensions; 3]; 3]);
 
 impl std::fmt::Debug for IntersectionMatrix {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::result::Result<(), std::fmt::Error> {
@@ -147,7 +147,6 @@ impl IntersectionMatrix {
         IntersectionMatrix(dimensions)
     }
 
-    #[cfg(test)]
     pub fn from_str(str: &str) -> Self {
         let mut im = IntersectionMatrix::empty();
         im.set_at_least_from_string(str);
@@ -248,7 +247,12 @@ impl IntersectionMatrix {
     // JTS:   public void set(int row, int column, int dimensionValue) {
     // JTS:     matrix[row][column] = dimensionValue;
     // JTS:   }
-    pub fn set(&mut self, location_a: Location, location_b: Location, dimensionality: Dimensions) {
+    pub(crate) fn set(
+        &mut self,
+        location_a: Location,
+        location_b: Location,
+        dimensionality: Dimensions,
+    ) {
         self.0[location_a as usize][location_b as usize] = dimensionality;
     }
 
@@ -284,7 +288,7 @@ impl IntersectionMatrix {
     // JTS:       matrix[row][column] = minimumDimensionValue;
     // JTS:     }
     // JTS:   }
-    pub fn set_at_least(
+    pub(crate) fn set_at_least(
         &mut self,
         location_a: Location,
         location_b: Location,
@@ -312,7 +316,7 @@ impl IntersectionMatrix {
     // JTS:       setAtLeast(row, column, minimumDimensionValue);
     // JTS:     }
     // JTS:   }
-    pub fn set_at_least_if_valid(
+    pub(crate) fn set_at_least_if_valid(
         &mut self,
         location_a: Option<Location>,
         location_b: Option<Location>,
@@ -344,6 +348,7 @@ impl IntersectionMatrix {
     // JTS:   }
     pub fn set_at_least_from_string(&mut self, dimensions: &str) {
         if dimensions.len() != 9 {
+            error!("invalid dimensions: \"{}\"", dimensions);
             todo!("return proper error, or better yet make this a compile time macro")
         }
 
