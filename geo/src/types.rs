@@ -98,7 +98,7 @@ impl<F: GeoFloat> Closest<F> {
 ///     //     match self {
 ///     //        Geometry::Point(g) => g.foo_1(coord),
 ///     //        Geometry::LineString(g) => g.foo_1(coord),
-///     //        _ => todo!("...etc for other cases")
+///     //        _ => unimplemented!("...etc for other cases")
 ///     //     }
 ///     // }
 ///     //
@@ -106,7 +106,7 @@ impl<F: GeoFloat> Closest<F> {
 ///     //     match self {
 ///     //        Geometry::Point(g) => g.foo_2(),
 ///     //        Geometry::LineString(g) => g.foo_2(),
-///     //        _ => todo!("...etc for other cases")
+///     //        _ => unimplemented!("...etc for other cases")
 ///     //     }
 ///     // }
 ///
